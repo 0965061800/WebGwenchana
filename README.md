@@ -1,6 +1,8 @@
 This is my e-commerce project in UEH University, you can use it for reference, please don't copy it for any of your benefits, thank you!
 When you test, you can restore the database with the .bak file, please check your connectstring and your database server
 If you want to check the VNPayment, you can visit the VNPayment Sandbox for example accounts, and please change the URL in the appsetting.json to the local host
+https://sandbox.vnpayment.vn/apis/vnpay-demo/
+
 In this project, there are some features like:
 
 In the admin area:
