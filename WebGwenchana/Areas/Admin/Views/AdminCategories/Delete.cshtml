@@ -1,0 +1,71 @@
+﻿@model WebGwenchana.Models.Category
+
+@{
+    ViewData["Title"] = "Xóa danh mục:"+@Model.CatName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>@Model.CatName</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item"><a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Danh sách danh mục</a></div>
+            <div class="breadcrumb-item">Thông tin danh mục @Model.CatName</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Thông tin</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-md">
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold">ID</td>
+                                        <td>@Model.CatID</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Tên danh mục</td>
+                                        <td>@Model.CatName</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Mô tả</td>
+                                        <td>@Model.Description</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Hình ảnh</td>
+                                        <td>@Model.Photo</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Số lượng đặt hàng</td>
+                                        <td>@Model.Order</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <form asp-action="Delete" asp-route-id="@Model.CatID">
+                        <input type="hidden" asp-for="CatID" />
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                    </form>
+                </div>
+            </div>
+            <div class="col-6" style="max-height:400px;">
+                <img src="~/images/categories/@Model.Photo" style="width:100%; height:100%; object-fit:cover" />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

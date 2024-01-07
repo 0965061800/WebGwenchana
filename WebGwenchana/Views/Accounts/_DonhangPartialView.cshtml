@@ -1,0 +1,51 @@
+﻿@model List<Order>
+@if (Model!=null && Model.Count() > 0)
+{
+	<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
+		<div class="m-l-25 m-r--38 m-lr-0-xl">
+			<div class="wrap-table-shopping-cart">
+				<table class="table-shopping-cart">
+					<tr class="table_head">
+						<th class="column-1">ID</th>
+						<th class="column-2">Ngày mua hàng</th>
+						<th class="column-3">Trạng thái thanh toán</th>
+						<th class="column-4">Ghi chú</th>
+						<th class="column-5">Tổng tiền</th>
+						<th></th>
+					</tr>
+					@foreach (var item in Model)
+					{
+						<tr class="table_row">
+							<td class="column-1">
+								@item.OrderId
+							</td>
+							<td class="column-2">@item.OrderDate.ToString("dd/MM/yyyy")</td>
+							<td class="column-3">
+								@item.TransactStatus.Description
+							</td>
+							<td class="column-4">
+								<div> @item.Note</div>
+							</td>
+							<td class="column-5">@item.TotalMoney.ToString("#,##0")VNĐ</td>
+							<td>
+								<a  class="stext-91 cl0 bg5 bor1 hov-btn1 p-tb-5 p-lr-10 trans-04 xemdonhang js-show-modal1" data-madonhang="@item.OrderId">
+									Xem đơn hàng
+								</a>
+							</td>
+						</tr>
+					}
+				</table>
+			</div>
+		</div>
+	</div>
+} else
+{
+	<div>
+		<h4 class="ltext-91 cl5 txt-center respon1 mb-5"> Bạn chưa có đơn hàng á! Hãy đến cửa hàng để chọn lấy những món trang sức dành riêng cho mình nhé!</h4>
+		<div data-appear="zoomIn" data-delay="1600" class="text-center">
+			<a href="/dang-nhap.html" class="stext-91 cl0 bg1 bor1 hov-btn1 p-tb-5 p-lr-10 trans-04">
+				Đến cửa hàng
+			</a>
+		</div>
+	</div>
+}

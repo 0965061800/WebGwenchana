@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebGwenchana.Models.Role>
+
+@{
+    ViewData["Title"] = "Quản lý quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Quản lý quyền truy cập</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item">Danh sách quyền truy cập</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Bảng các quyền</h4>
+                        <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Create" class="btn btn-primary">Tạo mới quyền truy cập</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-md">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                @if (Model != null)
+                                {
+                                    foreach(var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.RoleID</td>
+                                            <td>@item.RoleName</td>
+                                            <td>@item.Description</td>
+                                            <td><div class="badge badge-success">Active</div></td>
+                                            <td>
+                                                <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Details" asp-route-id="@item.RoleID" class="btn btn-secondary">Detail</a>
+                                                <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminRoles" asp-action="Edit" asp-route-id="@item.RoleID">Edit</a>
+                                                <a asp-area="Admin" asp-controller="AdminRoles" asp-action="Delete" asp-route-id="@item.RoleID" class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

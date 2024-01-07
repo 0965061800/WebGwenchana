@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebGwenchana", "WebGwenchana\WebGwenchana.csproj", "{044DE080-3076-44A9-9B9F-01017F2AA476}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{044DE080-3076-44A9-9B9F-01017F2AA476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{044DE080-3076-44A9-9B9F-01017F2AA476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{044DE080-3076-44A9-9B9F-01017F2AA476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{044DE080-3076-44A9-9B9F-01017F2AA476}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88760B1E-CD96-4F88-B911-8ED3D11BF5AF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,157 @@
+﻿@model WebGwenchana.Models.Product
+
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var cats = ViewBag.DanhMuc;
+}
+@section CustomStyles {
+    <link rel="stylesheet" href="~/admisassets/modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="~/admisassets/modules/codemirror/theme/duotone-dark.css">
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Chỉnh sửa sản phẩm</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item"><a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">>Quản lý sản phẩm</a></div>
+            <div class="breadcrumb-item">Chỉnh sửa sản phẩm</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <form class="col-12" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@Model.ProductID" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ProductID"/>
+                <input type="hidden" asp-for="ProductPhoto" />
+                <input type="hidden" asp-for="ProductCollection" />
+                <input type="hidden" asp-for="ProductDateCreated" />
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row gx-5">
+                            <div class="form-group col-4">
+                                <label asp-for="ProductName">Tên sản phẩm</label>
+                                <input type="text" class="form-control" asp-for="ProductName">
+                            </div>
+                            <div class="form-group col-2">
+                                <label asp-for="ProductPrice">Giá sản phẩm </label>
+                                <input type="text" class="form-control" asp-for="ProductPrice">
+                            </div>
+                            <div class="form-group col-2">
+                                <label asp-for="ProductDiscount">Discount</label>
+                                <input type="text" class="form-control" asp-for="ProductDiscount">
+                            </div>
+                            <div class="form-group col-3">
+                                <label asp-for="CatID">Danh mục sản phẩm</label>
+                                <select class="form-control select2" asp-for="CatID" asp-items="ViewBag.DanhMuc">
+                                    <option value="" disabled selected>Chọn danh mục</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row gx-5">
+                            <div class="form-group col-4">
+                                <label asp-for="Tags">Tags</label>
+                                <input type="text" class="form-control inputtags" asp-for="Tags">
+                            </div>
+                            <div class="form-group col-2">
+                                <label asp-for="UnitsInStock">Số lượng sản phẩm</label>
+                                <input type="number" class="form-control" asp-for="UnitsInStock">
+                            </div>
+                            <div class="form-group col-3">
+                                <label>Chọn size mặc định</label>
+                                <select class="form-control select2" asp-for="SizeId" asp-items="ViewBag.Sizes" name="SizeId">
+                                    <option value="" disabled selected>Chọn size</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row ml-2 col-4 pt-3">
+                                <div class="form-group">
+                                    <label class="custom-switch mt-2" for="Active">
+                                        <input type="checkbox" class="custom-switch-input" asp-for="Active">
+                                        <span class="custom-switch-indicator active"></span>
+                                        <span class="custom-switch-description">Active</span>
+                                    </label>
+                                </div>
+                                <div class="form-group ml-4">
+                                    <label class="custom-switch mt-2" for="BestSellers">
+                                        <input type="checkbox" class="custom-switch-input" asp-for="BestSellers">
+                                        <span class="custom-switch-indicator best-seller"></span>
+                                        <span class="custom-switch-description">Best Seller</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-2">
+                                <label asp-for="MetaDesc">Meta Description</label>
+                                <input type="text" class="form-control" asp-for="MetaDesc">
+                            </div>
+                            <div class="form-group col-2">
+                                <label asp-for="MetaKey">Meta Key</label>
+                                <input type="text" class="form-control" asp-for="MetaKey">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProductPhoto">Ảnh đại diện</label>
+                            <input name="fThumb" type="file" class="" asp-for="ProductPhoto" />
+                            <span asp-validation-for="ProductPhoto" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="gallery gallery-md">
+                                        <img src="~/images/products/@Model.ProductPhoto" style="width:100%"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProductCollection">Thư viện ảnh</label>
+                            <input name="fCollection" type="file" multiple class="" asp-for="ProductCollection" />
+                            <span asp-validation-for="ProductCollection" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="gallery gallery-md">
+                                        @if(ViewBag.Photos != null)
+                                        {
+                                            foreach(string photo in ViewBag.Photos)
+                                            {
+                                                <div class="gallery-item" data-image="/images/gallery/@photo" data-title="Image 1"></div>
+                                            }
+                                        }                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-10 pl-0">
+                            <label asp-for="ProductShortDesciption">Giới thiệu ngắn</label>
+                            <input type="text" class="form-control datemask" style="height:100px" asp-for="ProductShortDesciption">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="ProductDescription">Mô tả sản phẩm</label>
+                            <div class="col-sm-12 col-md-10">
+                                <textarea class="summernote" asp-for="ProductDescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ml-3">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-info">Back to List</a>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    <script src="~/admisassets/modules/codemirror/lib/codemirror.js"></script>
+    <script src="~/admisassets/modules/codemirror/mode/javascript/javascript.js"></script>
+}

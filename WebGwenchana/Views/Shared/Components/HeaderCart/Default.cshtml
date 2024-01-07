@@ -1,0 +1,96 @@
+﻿@model List<WebGwenchana.ModelViews.CartItem>
+@if (Model != null && Model.Count() > 0)
+{
+	<!-- Cart -->
+	<div class="wrap-header-cart js-panel-cart">
+		<div class="s-full js-hide-cart"></div>
+
+		<div class="header-cart flex-col-l p-l-65 p-r-25" style="z-index:100">
+			<div class="header-cart-title flex-w flex-sb-m p-b-8">
+				<span class="mtext-103 cl2">
+					Giỏ hàng của bạn
+				</span>
+
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+
+			<div class="header-cart-content flex-w js-pscroll">
+				<ul class="header-cart-wrapitem w-full">
+					@foreach(var item in Model)
+					{
+						string url = $"/{item.product.ProductID}.html";
+						<li class="header-cart-item flex-w flex-t m-b-12">
+							<div class="header-cart-item-img">
+								<img src="~/images/products/@item.product.ProductPhoto" alt="@item.product.ProductName">
+							</div>
+
+							<div class="header-cart-item-txt p-t-8">
+								<a href="@url" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+									@item.product.ProductName
+								</a>
+
+								<span class="header-cart-item-info">
+									@item.amount x @item.product.ProductPrice.Value.ToString("#,##0") VNĐ
+								</span>
+							</div>
+						</li>
+					}
+				</ul>
+
+				<div class="w-full">
+					<div class="header-cart-total w-full p-tb-40">
+						Total: @Model.Sum(x => x.TotalMoney).ToString("#,##0") VNĐ
+					</div>
+
+					<div class="header-cart-buttons flex-w w-full">
+						<a href="/cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+							View Cart
+						</a>
+						@if (User.Identity.IsAuthenticated)
+						{
+							<a href="/checkout.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+								Check Out
+							</a>
+						} else
+						{
+							<a href="/dang-nhap.html?returnUrl=/checkout.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+								Check Out
+							</a>
+						}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+else
+{
+	<div class="wrap-header-cart js-panel-cart">
+		<div class="s-full js-hide-cart"></div>
+
+		<div class="header-cart flex-col-l p-l-65 p-r-25" style="z-index:100">
+			<div class="header-cart-title flex-w flex-sb-m p-b-8">
+				<span class="mtext-103 cl2">
+					Giỏ hàng của bạn
+				</span>
+
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+
+			<div class="">
+				<h4 class="ltext-91 cl5 txt-left respon1" style="margin-bottom:50px"> Bạn chưa chọn sản phẩm nào!</h4>
+				<div data-appear="zoomIn" data-delay="1600" class="text-left">
+					<a href="/shop.html" class="stext-91 cl0 bg1 bor1 hov-btn1 p-tb-5 p-lr-10 trans-04">
+						Đến cửa hàng
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+

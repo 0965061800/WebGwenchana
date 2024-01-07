@@ -1,0 +1,117 @@
+﻿@model WebGwenchana.Models.Product
+
+@{
+    ViewData["Title"] = "Thông tin về sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Thông tin sản phẩm</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item"><a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">Danh sách sản phẩm</a></div>
+            <div class="breadcrumb-item">Thông tin về sản phẩm</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div>
+                <img style="width:200px; height:200px" src="~/images/products/@Model.ProductPhoto" />
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Thông tin</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-md">
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold">Product ID</td>
+                                        <td>@Model.ProductID</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Tên sản phẩm</td>
+                                        <td>@Model.ProductName</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Danh mục</td>
+                                        <td>@Model.Category.CatName</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Giá</td>
+                                        <td>@Model.ProductPrice</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Discount</td>
+                                        <td>@Model.ProductDiscount</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="font-weight-bold">Giới thiệu</td>
+                                        <td>@Model.ProductShortDesciption</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Mô tả sản phẩm</td>
+                                        <td>@Html.Raw(System.Net.WebUtility.HtmlDecode(Model.ProductDescription))</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Hàng trong kho</td>
+                                        <td>@Model.UnitsInStock</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Tình trạng</td>
+                                        <td>@Model.Active</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Best seller</td>
+                                        <td>@Model.BestSellers</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Photos</td>
+                                        <td>
+                                            @if (ViewBag.Photos != null)
+                                            {
+                                                @foreach (string photo in ViewBag.Photos)
+                                                    {
+                                                          <img src="~/images/gallery/@photo" style="width:100px"/> 
+                                                    }
+                                            }
+                                            else
+                                            {
+                                                <p>There is no photo</p>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Sizes</td>
+                                        <td>
+                                            @if (ViewBag.SizePriceList != null)
+                                            {
+                                                @foreach (SizePrice size in ViewBag.SizePriceList)
+                                                {
+                                                    <p>@size.Size.Name: @size.ProductPrice?.ToString("#,##0 VNĐ")</p>
+                                                }
+                                            } else
+                                            {
+                                                <p>There is no size</p>
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.ProductID" class="btn btn-warning">Edit</a>
+                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

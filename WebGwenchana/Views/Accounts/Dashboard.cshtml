@@ -1,0 +1,177 @@
+﻿@model WebGwenchana.Models.Customer
+
+@{
+	ViewData["Title"] = "Thông tin khách hàng";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	List<Order> DanhSachDonHang = ViewBag.DonHang;
+}
+<partial name="_Header2" />
+
+
+
+<section class="sec-product bg0 p-t-100 p-b-50">
+	<div class="container">
+		<div class="p-b-32">
+			<h3 class="ltext-105 cl5 txt-center respon1">
+				Xin Chào @Model.FullName!
+			</h3>
+		</div>
+
+		<!-- Tab01 -->
+		<div class="tab01">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item p-b-10">
+					<a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Thông tin khách hàng</a>
+				</li>
+
+				<li class="nav-item p-b-10">
+					<a class="nav-link" data-toggle="tab" href="#order" role="tab">Đơn hàng</a>
+				</li>
+
+				<li class="nav-item p-b-10">
+					<a class="nav-link" data-toggle="tab" href="#address" role="tab">Địa chỉ</a>
+				</li>
+
+				<li class="nav-item p-b-10">
+					<a class="nav-link" data-toggle="tab" href="#top-rate" role="tab">Top Rate</a>
+				</li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content p-t-50">
+
+				<!-- - -->
+				<div class="tab-pane fade show active" id="profile" role="tabpanel">
+					<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
+						<div class="m-l-25 m-r--38 m-lr-0-xl row">
+							<div class="col-1"></div>
+							<div class="col-3">
+								<div style="width:100%; max-width:250px; max-height:250px">
+									<img src="~/Admisassets//img/avatar/avatar-1.png" style="width:100%; height:100%; object-fit:cover" class="rounded-circle" />
+								</div>
+							</div>
+							<div class="col-1"> </div>
+							<div>
+								<div class="flex-w w-full p-b-42">
+									<span class="fs-18 cl5 txt-center size-211">
+										<span class="lnr lnr-user"></span>
+									</span>
+
+									<div class="size-212 p-t-2">
+										<span class="mtext-110 cl2">
+											Họ và tên
+										</span>
+
+										<p class="stext-115 cl6 size-213 p-t-18">
+											@Model.FullName
+										</p>
+									</div>
+								</div>
+
+								<div class="flex-w w-full p-b-42">
+									<span class="fs-18 cl5 txt-center size-211">
+										<span class="lnr lnr-phone-handset"></span>
+									</span>
+
+									<div class="size-212 p-t-2">
+										<span class="mtext-110 cl2">
+											Số điện thoại
+										</span>
+
+										<p class="stext-115 cl1 size-213 p-t-18">
+											@Model.Phone
+										</p>
+									</div>
+								</div>
+
+								<div class="flex-w w-full">
+									<span class="fs-18 cl5 txt-center size-211">
+										<span class="lnr lnr-envelope"></span>
+									</span>
+
+									<div class="size-212 p-t-2">
+										<span class="mtext-110 cl2">
+											Email
+										</span>
+
+										<p class="stext-115 cl1 size-213 p-t-18">
+											@Model.Email
+										</p>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="order" role="tabpanel">
+					@await Html.PartialAsync("_DonhangPartialView", DanhSachDonHang)
+				</div>
+				<div class="tab-pane fade" id="address" role="tabpanel">
+					<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50 d-flex justify-content-center m-b-10">
+						<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+							<div class="flex-w w-full p-b-42">
+								<span class="fs-18 cl5 txt-center size-211">
+									<span class="lnr lnr-map-marker"></span>
+								</span>
+
+								<div class="size-212 p-t-2">
+									<span class="mtext-110 cl2">
+										Địa chỉ
+									</span>
+
+									<div class="stext-115 cl6 size-213 p-t-18">
+										<p><b>Số nhà, đường: </b>@Model.Address</p>
+										@* <p><b>Phường, xã: </b>@Model.Ward</p>
+										<p><b>Tỉnh thành: </b>@Model.LocationID</p> *@
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- - -->
+			</div>
+		</div>
+
+		<div class="layer-slick1 animated flex-c-m" data-appear="zoomIn" data-delay="1600">
+			<button class="stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 text-white">
+				<a asp-controller="Accounts" asp-action="Logout" style="text-decoration:none; color:inherit">Đăng xuất</a>
+			</button>
+		</div>
+	</div>
+</section>
+@* <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+		<div class="overlay-modal1 js-hide-modal1"></div>
+		<div class="container">
+			<div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
+				<div id="records_table">
+				</div>
+			</div>
+		</div>
+</div> *@
+
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			$(".xemdonhang").click(function () {
+				var madonhang = $(this).attr("data-madonhang")
+				$.ajax({
+					url: '/DonHang/Details',
+					datatype: "json",
+					type: "POST",
+					data: { id: madonhang },
+					async: true,
+					success: function (results) {
+						$("#records_table").html("");
+						$("#records_table").html(results);
+					},
+					error: function (xhr) {
+						alert('error');
+					}
+				});
+			});
+		});
+	</script>
+}

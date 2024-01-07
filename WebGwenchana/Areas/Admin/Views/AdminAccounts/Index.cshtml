@@ -1,0 +1,83 @@
+﻿@model IEnumerable<WebGwenchana.Models.Account>
+
+@{
+    ViewData["Title"] = "Quản lý tài khoản quản trị";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Quản lý tài khoản quản trị</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item">Quản lý tài khoản quản trị</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Tài khoản quản trị</h4>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>
+                                        <div class="custom-checkbox custom-control">
+                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                        </div>
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Avartar</th>
+                                    <th>FullName</th>
+                                    <th>Email</th>
+                                    <th>Quyền truy cập</th>
+                                    <th>Phone</th>
+                                    <th>Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                                @if(Model != null)
+                                {
+                                    @foreach(var item in Model)
+                                    {
+                                         <tr>
+                                            <td class="p-0 text-center">
+                                                <div class="custom-checkbox custom-control">
+                                                    <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                                                    <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>@item.AccountID</td>
+                                            <td>
+                                                <img alt="image" src="~/Admisassets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
+                                            </td>
+                                            <td>@item.FullName</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.Role?.Description</td>
+                                            <td>@item.Phone</td>
+                                            @if (item.Status == "Active") {
+                                                <td><div class="badge badge-success">Active</div></td>
+                                            } else
+                                            {
+                                                <td><div class="badge badge-danger">Unactive</div></td>
+                                            }
+                                            <td>
+                                                <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Details" asp-route-id="@item.AccountID" class="btn btn-secondary">Detail</a>
+                                                <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Edit" asp-route-id="@item.AccountID">Edit</a>
+                                                <a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Delete" asp-route-id="@item.AccountID" class="btn btn-danger">Delete</a>
+                                             </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

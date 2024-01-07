@@ -1,0 +1,88 @@
+﻿@model List<SizePrice>
+@{
+    ViewData["Title"] = "AddSizePrice";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Chỉnh giá Size</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item"><a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">>Quản lý sản phẩm</a></div>
+            <div class="breadcrumb-item">Chỉnh giá size</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <form class="col-12" asp-controller="AdminProducts" asp-action="SaveSizePrice" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="card">
+                    <div class="card-body" id="size-table">
+                        @if (Model.Count >= 0)
+                        {
+                            for (var i = 0; i < Model.Count(); i++)
+                             {
+                                var sizePrice = Model[@i];
+                                <div class="size-row">
+                                    <div class="row gx-5" >
+                                        <input asp-for="@sizePrice.SizePriceID" hidden name="sizePrices[@i].SizePriceID"  />
+                                        <input asp-for="@sizePrice.ProductID" hidden name="sizePrices[@i].ProductID" />
+                                        <div class="form-group col-4">
+                                            <label asp-for="@sizePrice.Size">Loại Size</label>
+                                            <select class="form-control select2" asp-items="ViewBag.Sizes" name="sizePrices[@i].SizeId" asp-for="@sizePrice.SizeId">
+                                                <option value="@sizePrice.SizeId" disabled selected>@sizePrice.Size.Name</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-2">
+                                            <label asp-for="@sizePrice.ProductPrice">Giá sản phẩm </label>
+                                            <input type="text" class="form-control" asp-for="@sizePrice.ProductPrice" name="sizePrices[@i].ProductPrice">
+                                        </div>
+                                        <input type="submit" asp-controller="AdminProducts" asp-action="SizeDelete" asp-route-id="@sizePrice.SizePriceID" asp-route-productID="@sizePrice.ProductID" class="btn btn-danger" value="Delete" />
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="form-group ml-3">
+                        <input type="submit" value="Submit" class="btn btn-primary"/>
+                        <div class="btn btn-secondary add-size">Thêm size</div>
+                    </div>
+                    <div class="form-group ml-3">
+                        <input type="submit" value="Edit" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-info">Back to List</a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        var productID = @ViewBag.productId;
+        $(document).ready(function () {
+            $(".add-size").click(function () {
+                var count = $("#size-table > .size-row").length;
+                $.ajax({
+                    url: '/Admin/AdminProducts/AddSize',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        id : count,
+                        productID: productID
+                    },
+                    async: true,
+                    success: function (results) {
+                        $("#size-table").append(results); 
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            })
+        })
+    </script>
+    }

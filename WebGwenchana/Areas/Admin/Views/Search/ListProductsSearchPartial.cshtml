@@ -1,0 +1,29 @@
+﻿@model List<Product>
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductID</td>
+            <td>@item.ProductName</td>
+            <td>@item.Category?.CatName</td>
+            <td>@item.ProductPrice.Value.ToString("#,##0") VND</td>
+            <td>@item.ProductDiscount</td>
+            @if (item.Active)
+            {
+                <td><div class="badge badge-success">Active</div></td>
+            }
+            else
+            {
+                <td><div class="badge badge-danger">Unactive</div></td>
+            }
+            <td>@item.ProductDateCreated</td>
+            <td>@item.UnitsInStock</td>
+            <td>
+                <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductID" class="btn btn-secondary">Detail</a>
+                <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductID">Edit</a>
+                <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductID" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+}

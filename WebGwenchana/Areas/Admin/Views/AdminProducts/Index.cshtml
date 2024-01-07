@@ -1,0 +1,156 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<WebGwenchana.Models.Product>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Quản lý sản phẩm</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item">Quản lý sản phẩm</div> 
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6>Lọc:</h6>
+                        <div class="col-3 form-group mb-0">
+                             <select class="form-group form-control select2" id="txtCatID" name="txtCatID" style="min-width: 200px;" asp-items="ViewBag.DanhMuc">
+                                <option selected>Chọn danh mục</option>
+                                <option value="0">Chọn tất cả</option>
+                            </select>
+
+                        </div>
+                        <div class="col-5 text-right">
+                            <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Create" class="btn btn-primary">Thêm sản phẩm</a>
+                        </div>
+
+                        <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" style="z-index:1" id="keyword" name="keyword">
+                                    <div class="input-group-btn" style="transform:translateX(-20px); z-index:10">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Danh mục</th>
+                                        <th>Giá</th>
+                                        <th>Khuyến mãi</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Hàng tồn</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="records_table">
+                                    @if (Model != null)
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.ProductID</td>
+                                                <td>@item.ProductName</td>
+                                                <td>@item.Category?.CatName</td>
+                                                <td>@item.ProductPrice.Value.ToString("#,##0") VND</td>
+                                                <td>@item.ProductDiscount</td>
+                                                @if (item.Active)
+                                                {
+                                                    <td><div class="badge badge-success">Active</div></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><div class="badge badge-danger">Unactive</div></td>
+                                                }
+                                                <td>@item.ProductDateCreated</td>
+                                                <td>@item.UnitsInStock</td>
+                                                <td>
+                                                    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductID" class="btn btn-secondary">Detail</a>
+                                                    <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductID">Edit</a>
+                                                    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductID" class="btn btn-danger">Delete</a>
+                                                    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="AddSizePrice" asp-route-id="@item.ProductID" class="btn btn-danger">Edit Size</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <pager class="page-container" list="@Model" asp-area="Admin" asp-controller="AdminProducts" asp-route-CatID="@ViewBag.CurrentCateID" asp-action="Index"></pager>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCatID").change(function () {
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                $('#txtCatID option')
+                    .removeAttr('selected');
+                $("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/AdminProducts/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        CatID: catID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="~/admisassets/modules/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/admisassets/js/page/components-table.js"></script>
+}

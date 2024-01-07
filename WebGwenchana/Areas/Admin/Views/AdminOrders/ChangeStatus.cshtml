@@ -1,0 +1,80 @@
+﻿@model WebGwenchana.Models.Order
+@{
+    ViewData["Title"] = "ChangeStatus";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Thay đổi trạng thái đơn hàng</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item"><a asp-area="Admin" asp-controller="AdminCategories" asp-action="Index">Danh sách danh mục</a></div>
+            <div class="breadcrumb-item">Thay đổi trạng thái</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Thông tin</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-md">
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold">ID</td>
+                                        <td>@Model.OrderId</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">ID khách hàng</td>
+                                        <td>@Model.Customer.CustomerID</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Tên khách hàng</td>
+                                        <td>@Model.Customer.FullName</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Tổng tiền</td>
+                                        <td>@Model.TotalMoney.ToString("#0,00")VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Trạng thái hiện tại</td>
+                                        <td>@Model.TransactStatus.Status</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form class="col-md-6" asp-controller="AdminOrders" asp-action="ChangeStatus" asp-route-id="@Model.OrderId" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="OrderId" />
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row gx-5">
+                            <div class="form-group col-3">
+                                <label asp-for="TransactStatusID">Trạng thái</label>
+                                <select class="form-control select2" asp-for="TransactStatusID" asp-items="@ViewBag.TrangThai">
+                                    <option value="" disabled selected>Chọn</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ml-3">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-info">Back to List</a>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+

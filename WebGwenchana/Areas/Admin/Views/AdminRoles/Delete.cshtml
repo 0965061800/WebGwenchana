@@ -1,0 +1,58 @@
+﻿@model WebGwenchana.Models.Role
+
+@{
+    ViewData["Title"] = "Xóa quyền truy cập";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Xóa quyền truy cập</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item"><a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Danh sách quyền truy cập</a></div>
+            <div class="breadcrumb-item">Xóa quyền truy cập @Model.RoleName</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Thông tin</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-md">
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold">Role ID</td>
+                                        <td>@Model.RoleID</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Role Name</td>
+                                        <td>@Model.RoleName</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">Role Discription</td>
+                                        <td>@Model.Description</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <form asp-action="Delete" asp-route-id="@Model.RoleID">
+                        <input type="hidden" asp-for="RoleID" />
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

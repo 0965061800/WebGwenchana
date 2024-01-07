@@ -1,0 +1,109 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<WebGwenchana.Models.Customer>
+
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Quản lý khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="section">
+    <div class="section-header">
+        <h1>Quản lý khách hàng</h1>
+        <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a></div>
+            <div class="breadcrumb-item">Quản lý khách hàng</div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Bảng thông tin khách hàng</h4>
+                        @* <div class="col-3 form-group mb-0">
+                            <select class="form-group form-control select2" id="idrole" name="idrole" asp-items="ViewBag.QuyenTruyCap">
+                                <option value="" disabled selected>Chọn quyền truy cập</option>
+                            </select>
+                        </div>
+                        <div class="col-2 form-group mb-0">
+                            <select class="form-group form-control select2" id="idstatus" name="idstatus" asp-items="ViewBag.IsTrangThai">
+                                <option value="" disabled selected>Chọn trạng thái</option>
+                            </select>
+                        </div> *@
+
+                        @* <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div> *@
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>
+                                        <div class="custom-checkbox custom-control">
+                                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                        </div>
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Avartar</th>
+                                    <th>FullName</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                                @if(Model != null)
+                                {
+                                    @foreach(var item in Model)
+                                    {
+                                         <tr>
+                                            <td class="p-0 text-center">
+                                                <div class="custom-checkbox custom-control">
+                                                    <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                                                    <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>@item.CustomerID</td>
+                                            <td>
+                                                <img alt="image" src="~/Admisassets/img/avatar/avatar-3.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
+                                            </td>
+                                            <td>@item.FullName</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.Phone</td>
+                                            @if (item.Active) {
+                                                <td><div class="badge badge-success">Active</div></td>
+                                            } else
+                                            {
+                                                <td><div class="badge badge-danger">Block</div></td>
+                                            }
+                                            <td>
+                                                <a asp-area="Admin" asp-controller="AdminCustomers" asp-action="Details" asp-route-id="@item.CustomerID" class="btn btn-secondary">Detail</a>
+                                                <a class="btn btn-warning" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Edit" asp-route-id="@item.CustomerID">ChangeState</a>
+                                             </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <div aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <pager class="page-container" list="@Model" asp-area="Admin" asp-controller="AdminCustomers" asp-action="Index"></pager>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

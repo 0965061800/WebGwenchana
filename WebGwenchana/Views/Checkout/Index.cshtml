@@ -1,0 +1,173 @@
+﻿@model WebGwenchana.ModelViews.MuaHangVM
+@{
+    ViewData["Title"] = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+	List<WebGwenchana.ModelViews.CartItem> Carts = ViewBag.GioHang;
+}
+
+@section CustomStyles {
+	<link rel="stylesheet" href="~/admisassets/modules/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/admisassets/modules/fontawesome/css/all.min.css">
+
+	<!-- CSS Libraries -->
+	<link rel="stylesheet" href="~/admisassets/modules/bootstrap-daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" href="~/admisassets/modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+	<link rel="stylesheet" href="~/admisassets/modules/select2/dist/css/select2.min.css">
+	<link rel="stylesheet" href="~/admisassets/modules/jquery-selectric/selectric.css">
+	<link rel="stylesheet" href="~/admisassets/modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+	<link rel="stylesheet" href="~/admisassets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
+	<!-- Template CSS -->
+	<link rel="stylesheet" href="~/admisassets/css/style.css">
+	<link rel="stylesheet" href="~/admisassets/css/components.css">
+}
+
+<partial name="_Header2" />
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('https://png.pngtree.com/thumb_back/fh260/back_our/20190619/ourmid/pngtree-ring-jewelry-promotion-poster-background-image_133692.jpg');">
+	<h2 class="ltext-105 cl0 txt-center">
+		Thanh toán
+	</h2>
+</section>
+
+
+
+<!-- Content page -->
+<section class="bg0 p-t-104 p-b-116">
+	<div class="container">
+		<form asp-controller="Checkout" asp-action="Index" method="post">
+			<input hidden asp-for="CustomerID" />
+			<input hidden asp-for="Email" />
+			<div class="flex-w flex-tr">
+				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+						<h4 class="mtext-105 cl2 txt-center p-b-30">
+							THÔNG TIN CÁ NHÂN
+						</h4>
+						<div class="card-body">
+							<div class="form-group">
+								<label>Tên Khách Hàng</label>
+								<input type="text" class="form-control" asp-for="FullName" placeholder="Họ và Tên">
+							</div>
+							<div class="form-group">
+								<label>Số điện thoại</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-phone"></i>
+										</div>
+									</div>
+								<input type="text" class="form-control" asp-for="Phone" placeholder="Số điện thoại">
+								</div>
+								<span asp-validation-for="Phone" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label>Địa chỉ</label>
+								<input type="text" class="form-control" asp-for="Address" placeholder="Địa chỉ">
+								<span asp-validation-for="Address" class="text-danger"></span>
+							</div>
+							@* <div class="form-group">
+								<label>Tỉnh thành</label>
+							<select class="form-control select2" asp-for="TinhThanh">
+									<option>Sài gòn</option>
+									<option value=1>Hà Nội</option>
+									<option>Bình nguyên vô tận</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Quận/ Huyện</label>
+							<select class="form-control select2" asp-for="QuanHuyen">
+									<option>Sài gòn</option>
+									<option value=1>Hà Nội</option>
+									<option>Bình nguyên vô tận</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Phường Xã</label>
+							<select class="form-control select2" asp-for="PhuongXa">
+									<option>Sài gòn</option>
+									<option value=1>Hà Nội</option>
+									<option>Bình nguyên vô tận</option>
+								</select>
+							</div> *@
+						</div>
+				</div>
+				<div class="size-210 bor10 p-lr-5 p-t-55 p-b-70 w-full-md">
+					<h4 class="mtext-105 cl2 txt-center p-b-30">
+						THÔNG TIN ĐƠN HÀNG
+					</h4>
+					<div class="table-responsive p-t-30">
+						<div class="table-responsive">
+							<table class="table table-striped table-md">
+								<tr>
+									<th>#</th>
+									<th>Name</th>
+									<th>Số lượng</th>
+									<th>Thành tiền</th>
+								</tr>
+									@if (Carts.Count() > 0)
+								{
+									foreach (var item in Carts)
+									{
+										<tr>
+											<td>@item.product.ProductID</td>
+											<td>@item.product.ProductName</td>
+											<td>@item.amount</td>
+											<td><div class="badge badge-success">@item.TotalMoney.ToString("#,##0") VNĐ</div></td>
+										</tr>
+									}
+								}
+								<tr>
+									<td></td>
+									<td><b>TỔNG ĐƠN HÀNG</b></td>
+									<td></td>
+									<td><div class="badge badge-success">@Carts.Sum(x => x.TotalMoney).ToString("#,##0") VNĐ</div></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<h4>Chọn phương thức thanh toán</h4>
+						</div>	
+						<div class="layer-slick1 animated flex-c-m justify-content-around " data-appear="zoomIn" data-delay="1600">
+							<input class="stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 text-white" type="submit" name="payment" value="Thanh toan COD">
+							</input>
+							<input class="stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 text-white" type="submit" name="payment" value="Thanh toan VNPAY">
+							</input>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+@section Scripts {
+	<!-- General JS Scripts -->
+	<script src="~/admisassets/modules/jquery.min.js"></script>
+	<script src="~/admisassets/modules/popper.js"></script>
+	<script src="~/admisassets/modules/tooltip.js"></script>
+	<script src="~/admisassets/modules/bootstrap/js/bootstrap.min.js"></script>
+	<script src="~/admisassets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+	<script src="~/admisassets/modules/moment.min.js"></script>
+	<script src="~/admisassets/js/stisla.js"></script>
+
+	<!-- JS Libraies -->
+	<script src="~/admisassets/modules/cleave-js/dist/cleave.min.js"></script>
+	<script src="~/admisassets/modules/cleave-js/dist/addons/cleave-phone.us.js"></script>
+	<script src="~/admisassets/modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+	<script src="~/admisassets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<script src="~/admisassets/modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+	<script src="~/admisassets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+	<script src="~/admisassets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+	<script src="~/admisassets/modules/select2/dist/js/select2.full.min.js"></script>
+	<script src="~/admisassets/modules/jquery-selectric/jquery.selectric.min.js"></script>
+
+	<!-- Page Specific JS File -->
+	<script src="~/admisassets/js/page/forms-advanced-forms.js"></script>
+
+	<!-- Template JS File -->
+	<script src="~/admisassets/js/scripts.js"></script>
+	<script src="~/admisassets/js/custom.js"></script>
+}
